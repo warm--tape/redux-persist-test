@@ -28,22 +28,18 @@ function MainScreen() {
   // ================================================================
   //   Handlers
   const onAddItemHandler = () => {
-    console.log("itemToAdd", itemToAdd);
-    dispatch(addItemData(itemToAdd));
-    // setItemToAdd("");
+    if (itemToAdd.itemName) {
+      dispatch(addItemData(itemToAdd));
+      setItemToAdd({ itemName: "" });
+    } else {
+      alert("Please enter an item name.");
+    }
   };
 
   // ================================================================
   //   Render
 
   // Item ItemDataIsLoading
-  if (itemDataIsLoading) {
-    <Text>Loading...</Text>;
-  }
-
-  if (!itemDataIsLoading && itemDataError) {
-    <Text>{itemDataError}</Text>;
-  }
 
   return (
     <View style={styles.container}>
@@ -58,7 +54,7 @@ function MainScreen() {
         <FlatList
           data={itemData}
           renderItem={({ item }) => (
-            <Text style={styles.listItem}>{item?.itemName}</Text>
+            <Text style={styles.listItem}>{item.itemName}</Text>
           )}
         />
       ) : (
